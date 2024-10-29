@@ -364,6 +364,7 @@ int ex04()
   int num_destinos;
   char **ciudades;
   int *costos;
+  char buffer[100];
 
   // Abrir el archivo
   fp = fopen("destinos.txt", "r");
@@ -377,6 +378,57 @@ int ex04()
   fscanf(fp, "%d\n", &num_destinos);
 
   // crear arreglos dinamicos
+  ciudades = (char **)malloc(num_destinos * sizeof(char *));
+  costos = (int *)malloc(num_destinos * sizeof(int));
+  if (ciudades == NULL || costos == NULL) // Verificar que la asignación de memoria fue exitosa
+  {
+    printf("Error en la asignación de memoria\n");
+    fclose(fp);
+    return 1;
+  }
+
+  // Leer los destinos
+  for (int i = 0; i < num_destinos; i++)
+  {
+    char ciudad[100];
+    int costo;
+    char signo;
+
+    // leer linea completa
+    fgets(buffer, sizeof(buffer), fp);
+    // parsear la ciudad y el costo
+    fscanf(fp, "%s %c %d\n", ciudad, &signo, &costo);
+
+    // Asignar memoria para el string de la ciudad
+    ciudades[i] = (char *)malloc((strlen(ciudad) + 1) * sizeof(char));
+    if (ciudades[i] == NULL)
+    {
+      printf("Error en la asignación de memoria\n");
+      // Liberar memoria previamente asignada
+      for (int j = 0; j < i; j++)
+      {
+        free(ciudades[j]);
+      }
+      free(ciudades);
+      free(costos);
+      fclose(fp);
+      return 1;
+    }
+
+    // Copiar la ciudad y el costo a los arreglos
+    strcpy(ciudades[i], ciudad);
+    costos[i] = costo;
+  }
+
+  // Imprimir los arreglos
+  printf("Destinos y costo:\n");
+  for (int i = 0; i < num_destinos; i++)
+  {
+    printf("%s $%d\n", ciudades[i], costos[i]);
+  }
+
+  // Cerrar el archivo
+  fclose(fp);
 
   /* ----------  FIN RESPUESTA:  --------------- */
   return 0;
