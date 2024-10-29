@@ -564,13 +564,13 @@ void reverse(char *str)
   {
     len++;
   }
-  // push all the characters to the stack
+  // push a cada carácter de la cadena
   for (int i = 0; i < len; i++)
   {
     push(str[i]);
   }
 
-  // pop all the characters from the stack
+  // pop del stack y asignar a la cadena
   for (int i = 0; i < len; i++)
   {
     str[i] = pop();
