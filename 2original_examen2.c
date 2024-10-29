@@ -322,10 +322,7 @@ int ex03()
   }
 
   // Libera la memoria
-  for(int i = 0; i < 4; i++)
-  {
-    free(ptr_arr[i]);
-  }
+  free(ptr_arr);
 
   /* ----------  FIN DE RESPUESTA:  --------------- */
   return 0;
@@ -363,6 +360,23 @@ int ex03()
 int ex04()
 {
   /* ----------  INICIO RESPUESTA:  --------------- */
+  FILE *fp;
+  int num_destinos;
+  char **ciudades;
+  int *costos;
+
+  // Abrir el archivo
+  fp = fopen("destinos.txt", "r");
+  if (fp == NULL)
+  {
+    printf("Error al abrir el archivo\n");
+    return 1;
+  }
+
+  // Leer número de destinos
+  fscanf(fp, "%d\n", &num_destinos);
+
+  // crear arreglos dinamicos
 
   /* ----------  FIN RESPUESTA:  --------------- */
   return 0;
