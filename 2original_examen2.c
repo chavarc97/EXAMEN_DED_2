@@ -430,17 +430,19 @@ int ex04()
   fclose(fp);
 
   // Escribir nombre al final del archivo
-    fp = fopen("destinos.txt", "a");
-    if (fp == NULL) {
-        printf("Error al abrir el archivo para escritura\n");
-        return 1;
-    }
-    
-    fprintf(fp, "%s\n", alumno);
-    fclose(fp);
+  fp = fopen("destinos.txt", "a");
+  if (fp == NULL)
+  {
+    printf("Error al abrir el archivo para escritura\n");
+    return 1;
+  }
+
+  fprintf(fp, "%s\n", alumno);
+  fclose(fp);
 
   // Liberar memoria
-  for(int i = 0; i < num_destinos; i++) {
+  for (int i = 0; i < num_destinos; i++)
+  {
     free(ciudades[i]);
   }
   free(ciudades);
@@ -469,6 +471,33 @@ int ex05()
 {
   /* ----------  INICIO RESPUESTA:  --------------- */
   FILE *fp;
+  int num, password;
+  char str[5];
+
+  // Abrir el archivo binario
+  fp = fopen("password.data", "rb");
+  if (fp == NULL)
+  {
+    printf("Error al abrir el archivo\n");
+    return 1;
+  }
+
+  // Buscar el número 123456 en el archivo
+  while (fread(&num, sizeof(int), 1, fp) == 1)
+  {
+    if (num == 123456)
+    {
+      // Leer el password (entero de 4 dígitos + 4 caracteres)
+      fread(&password, sizeof(int), 1, fp);
+      fread(str, sizeof(char), 4, fp);
+      str[4] = '\0'; // Agregar terminador de cadena
+      printf("Password encontrado: %d%s\n", password, str);
+      break;
+    }
+  }
+
+  // Cerrar el archivo
+  fclose(fp);
   /* ----------  FIN RESPUESTA:  --------------- */
   return 0;
 }
@@ -494,7 +523,44 @@ int ex05()
 
 /* ----------  INICIO RESPUESTA:  --------------- */
 // Agrega aquí tus estructuras, funciones del Stack, y función "reverse".
+typedef struct Stack
+{
+  /* data */
+  char c;
+  struct Stack *prev;
+} Stack;
 
+Stack *top_stack = NULL;
+
+void push(char x)
+{
+  Stack *prev = top_stack;
+  Stack *new_n = (Stack *)malloc(sizeof(Stack));
+  // assign the character to the new node
+  new_n->c = x;
+  // update the top
+  new_n->prev = prev;
+  top_stack = new_n;
+}
+
+// pop the node and return the char
+char pop()
+{
+  Stack *old_top = top_stack;
+  Stack *new_top = NULL;
+
+  // remove the top
+  char popped_node = old_top->c;
+  new_top = old_top->prev;
+  free(old_top);
+  top_stack = new_top;
+  return popped_node;
+}
+
+void reverse(char *str)
+{
+
+}
 /* ----------  FIN RESPUESTA:  --------------- */
 
 void ex06()
@@ -518,10 +584,10 @@ int main()
   printf("\n=== E03: Arreglo de listas\n");
   ex03();
   printf("\n=== E04: Destinos \n");
-   ex04();
+  // ex04();
   printf("\n=== E05: Password \n");
-  // ex05();
+  ex05();
   printf("\n=== E06: Reverse \n");
-  // ex06();
+  ex06();
   return 0;
 }
