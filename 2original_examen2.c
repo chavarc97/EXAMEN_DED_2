@@ -559,7 +559,22 @@ char pop()
 
 void reverse(char *str)
 {
+  int len = 0;
+  while (str[len] != '\0')
+  {
+    len++;
+  }
+  // push all the characters to the stack
+  for (int i = 0; i < len; i++)
+  {
+    push(str[i]);
+  }
 
+  // pop all the characters from the stack
+  for (int i = 0; i < len; i++)
+  {
+    str[i] = pop();
+  }
 }
 /* ----------  FIN RESPUESTA:  --------------- */
 
@@ -569,7 +584,7 @@ void ex06()
   printf("%s\n", prueba); // Debe imprimir "ITESO"
   /* ----------  INICIO RESPUESTA:  --------------- */
   // Llama tu función aquí.
-
+  reverse(prueba);
   /* ----------  FIN RESPUESTA:  --------------- */
   printf("%s\n", prueba); // Debe imprimir "OSETI"
 }
@@ -584,7 +599,7 @@ int main()
   printf("\n=== E03: Arreglo de listas\n");
   ex03();
   printf("\n=== E04: Destinos \n");
-  // ex04();
+  ex04();
   printf("\n=== E05: Password \n");
   ex05();
   printf("\n=== E06: Reverse \n");
