@@ -397,8 +397,7 @@ int ex04()
     // leer linea completa
     fgets(buffer, sizeof(buffer), fp);
     // parsear la ciudad y el costo
-    fscanf(fp, "%s %c %d\n", ciudad, &signo, &costo);
-
+    sscanf(buffer, "%s $%d", ciudad, &costo);
     // Asignar memoria para el string de la ciudad
     ciudades[i] = (char *)malloc((strlen(ciudad) + 1) * sizeof(char));
     if (ciudades[i] == NULL)
@@ -430,6 +429,23 @@ int ex04()
   // Cerrar el archivo
   fclose(fp);
 
+  // Escribir nombre al final del archivo
+    fp = fopen("destinos.txt", "a");
+    if (fp == NULL) {
+        printf("Error al abrir el archivo para escritura\n");
+        return 1;
+    }
+    
+    fprintf(fp, "%s\n", alumno);
+    fclose(fp);
+
+  // Liberar memoria
+  for(int i = 0; i < num_destinos; i++) {
+    free(ciudades[i]);
+  }
+  free(ciudades);
+  free(costos);
+
   /* ----------  FIN RESPUESTA:  --------------- */
   return 0;
 }
@@ -452,7 +468,7 @@ int ex04()
 int ex05()
 {
   /* ----------  INICIO RESPUESTA:  --------------- */
-
+  FILE *fp;
   /* ----------  FIN RESPUESTA:  --------------- */
   return 0;
 }
@@ -502,7 +518,7 @@ int main()
   printf("\n=== E03: Arreglo de listas\n");
   ex03();
   printf("\n=== E04: Destinos \n");
-  // ex04();
+   ex04();
   printf("\n=== E05: Password \n");
   // ex05();
   printf("\n=== E06: Reverse \n");
